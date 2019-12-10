@@ -46,9 +46,7 @@ class SearchHeader extends Component {
                     <SearchFilm/>
                     <div className="count-movie">
                         <p>4 Movie found</p>
-                        <div>
-                            <ButtonsCriteriaSearch buttonNames={this.state}/>
-                        </div>
+                        <ButtonsCriteriaSearch buttonNames={this.state}/>
                     </div>
                 </StyledHeader>
             </Fragment>
