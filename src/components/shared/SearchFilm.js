@@ -8,10 +8,29 @@ const StyledGroup = styled(InputGroup)`
 `;
 
 class SearchFilm extends Component {
-    state = {
-        kind: 'Search',
-        left: 'Title',
-        right: 'Genre'
+    constructor(props) {
+        super(props);
+        this.state = {
+            kind: 'Search',
+            left: 'Title',
+            right: 'Genre',
+            disabled: true
+        }
+    }
+
+    handleClick() {
+       fetch('https://reactjs-cdp.herokuapp.com/movies')
+          .then(response => response.json())
+          .then(data => {
+            console.log('dddddd', data)
+          });
+    }
+
+    handleChange() {
+        const value = this.myInput.value;
+
+        value ? this.setState({disabled: false})
+              : this.setState({disabled: true})
     }
 
     render() {
@@ -23,9 +42,11 @@ class SearchFilm extends Component {
                         placeholder="Please write the film name"
                         aria-label="Recipient's username"
                         aria-describedby="basic-addon2"
+                        ref={value => { this.myInput = value; }}
+                        onChange={() => this.handleChange()}
                     />
                     <InputGroup.Append>
-                        <Button variant="outline-danger">Search</Button>
+                        <Button variant="outline-danger" onClick={this.handleClick} disabled={this.state.disabled}>Search</Button>
                     </InputGroup.Append>
                 </StyledGroup>
                 <ButtonsCriteriaSearch buttonNames={this.state}/>
