@@ -4,6 +4,7 @@ import CardFilm from './CardFilm';
 import NotFound from './NotFound';
 import FilmDetails from './FilmDetails'
 import ErrorBoundary from './shared/ErrorBoundary';
+import { connect } from 'react-redux';
 import styled from 'styled-components'
 
 const StyledSection = styled.section`
@@ -21,6 +22,8 @@ const StyledSection = styled.section`
 class App extends Component {
 
     render() {
+        const { error, loading, data } = this.props;
+
         return (
             <Fragment>
                 <ErrorBoundary>
@@ -28,10 +31,10 @@ class App extends Component {
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <StyledSection>
-                        <CardFilm/>
-                        <CardFilm/>
-                        <CardFilm/>
-                        <CardFilm/>
+                    {data.map(item =>
+                    <CardFilm key={item.id}/>
+          // <li key={product.id}>{product.name}</li>
+        )}
                     </StyledSection>
                 </ErrorBoundary>
             </Fragment>
@@ -39,4 +42,12 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  data: state.movieReducer.data,
+  loading: state.movieReducer.loading,
+  error: state.movieReducer.error,
+  search: state.criteriaReducer.search,
+  sort: state.criteriaReducer.sort
+});
+
+export default connect(mapStateToProps)(App);
