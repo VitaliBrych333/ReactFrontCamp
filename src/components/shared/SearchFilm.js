@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { connect } from 'react-redux';
 import { fetchMovies } from '../../redux/actions/moviesActions';
 
-
 const StyledGroup = styled(InputGroup)`
     padding: 0 50px;
 `;
@@ -22,7 +21,6 @@ class SearchFilm extends Component {
     }
 
     handleClick() {
-        console.log('ddddd', this.props.search)
         this.props.dispatch(
             fetchMovies(this.props.sort, this.props.search, this.myInput.value));
     }
@@ -57,7 +55,7 @@ class SearchFilm extends Component {
 }
 
 const mapStateToProps = state => ({
-    data: state.movieReducer.data,
+    data: state.movieReducer.movies.data,
     loading: state.movieReducer.loading,
     error: state.movieReducer.error,
     search: state.criteriaReducer.search,

@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import { Badge, Card } from 'react-bootstrap';
 import styled from 'styled-components'
+import { connect } from 'react-redux';
+import { fetchMoviesByGenre } from '../redux/actions/moviesActions';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams
+} from 'react-router-dom';
 
 const StyledCartTitle = styled(Card.Title)`
     display: flex;
@@ -38,25 +47,62 @@ const StyledCard = styled(Card)`
     .card-text, .card-text p {
         margin: 0;
         padding: 0;
+        font-size: 14px;
     }
-`; 
+
+    span {
+        height: 24px;
+    }
+
+    button {
+        margin-right: 3px;
+    }
+
+    button:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+`;
 
 class Item extends Component {
+
+    handleClick(e) {
+      this.props.dispatch(
+          fetchMoviesByGenre(this.props.sort, e.target.value));
+    }
+
+    handleRequests(e, array) {
+      if (array.length) {
+          this.props.dispatch(
+            fetchMoviesByGenre(this.props.sort, array));
+      }
+
+    }
 
     render() {
         return (
             <StyledCard>
-                <Card.Img variant="top" src="https://m.media-amazon.com/images/M/MV5BMzFkM2YwOTQtYzk2Mi00N2VlLWE3NTItN2YwNDg1YmY0ZDNmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" />
+                <Card.Img variant="top" src={this.props.info.poster_path} />
                 <Card.Body>
                     <StyledCartTitle>
-                        <a href="#">Film title</a>
-                        <Badge variant="secondary">2019</Badge>
+                        <Link to={{pathname: `/movies/${this.props.info.id}`}} onClick={e => this.handleRequests(e, this.props.info.genres)}>{this.props.info.title}</Link>
+                        <Badge variant="secondary">{this.props.info.release_date.trim().slice(0, 4)}</Badge>
                     </StyledCartTitle>
-                    <Card.Text><button variant="secondary">Action</button></Card.Text>
+                    <Card.Text>
+                        {this.props.info.genres.map((item, index) => <button onClick={e => this.handleClick(e, 'value')} value={item} href='#' key={index} info={item} variant="secondary">{item}</button> )}
+                    </Card.Text>
                 </Card.Body>
             </StyledCard>
         )
     }
 }
 
-export default Item
+const mapStateToProps = state => ({
+    data: state.movieReducer.movies.data,
+    loading: state.movieReducer.loading,
+    error: state.movieReducer.error,
+    search: state.criteriaReducer.search,
+    sort: state.criteriaReducer.sort
+});
+
+export default connect(mapStateToProps)(Item);

@@ -11,11 +11,11 @@ const StyledHeader = styled.header`
         padding: 10px 50px;
         display: flex;
         margin-top: 50px;
-        justify-content: space-between;
+        justify-content: flex-end;
         background-color: rgb(90, 70, 70);
         color: beige;
     }
-    
+
     .count-movie p {
         margin-left: 0;
     }
@@ -28,6 +28,10 @@ const StyledHeader = styled.header`
         display: inline-block;
         margin:  0 20px 0 50px;
         padding-top: 5px;
+    }
+
+    .count {
+        flex-grow: 1;
     }
 `;
 
@@ -42,10 +46,10 @@ class SearchHeader extends Component {
     render() {
         return (
             <Fragment>
-                <StyledHeader> 
+                <StyledHeader>
                     <SearchFilm/>
                     <div className="count-movie">
-                        <p>4 Movie found</p>
+                        {this.props.count > 0 && <p className="count">{this.props.count} Movie found</p>}
                         <ButtonsCriteriaSearch buttonNames={this.state}/>
                     </div>
                 </StyledHeader>

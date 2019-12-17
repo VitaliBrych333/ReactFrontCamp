@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { setSearch, setSort } from '../../redux/actions/criteriaActions';
-
+import { sortRelease, sortRating } from '../../redux/actions/moviesActions';
 class CriteriaSearch extends Component {
     constructor(props) {
         super(props);
@@ -14,14 +14,24 @@ class CriteriaSearch extends Component {
         e.target.nextSibling ? e.target.nextSibling.className = 'btn btn-secondary'
                              : e.target.previousSibling.className = 'btn btn-secondary';
 
-        if ((e.target.innerHTML === 'Title') || (e.target.innerHTML === 'Genre')) {
-            this.props.dispatch(setSearch(e.target.innerHTML));
-
-        } else if ((e.target.innerHTML === 'Release date') || (e.target.innerHTML === 'Rating')) {
-            this.props.dispatch(setSort(e.target.innerHTML));
+        switch (e.target.innerHTML) {
+            case 'Title':
+                this.props.dispatch(setSearch('title'));
+                break;
+            case 'Genre':
+                this.props.dispatch(setSearch('genres'));
+                break;
+            case 'Release date':
+                this.props.dispatch(setSort('release_date'));
+                this.props.dispatch(sortRelease(this.props.data));
+                break;
+            case 'Rating':
+                this.props.dispatch(setSort('vote_average'));
+                this.props.dispatch(sortRating(this.props.data));
+                break;
+            default:
+              break;
         }
-
-        console.log('fffffffff', this.props)
     }
 
     render() {
@@ -39,8 +49,9 @@ class CriteriaSearch extends Component {
 
 function mapStateToProps(state) {
     return {
-        search: state.criteriaReducer.search,
-        sort: state.criteriaReducer.sort
+        // search: state.criteriaReducer.search,
+        // sort: state.criteriaReducer.sort,
+        data: state.movieReducer.movies,
     };
 }
 

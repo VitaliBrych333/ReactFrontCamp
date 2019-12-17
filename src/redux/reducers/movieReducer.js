@@ -1,11 +1,17 @@
 import {
     FETCH_MOVIES_BEGIN,
     FETCH_MOVIES_SUCCESS,
-    FETCH_MOVIES_FAILURE
+    FETCH_MOVIES_FAILURE,
+    FETCH_FILMID_BEGIN,
+    FETCH_FILMID_SUCCESS,
+    FETCH_FILMID_FAILURE,
+    SORT_RELEASE,
+    SORT_RATING
 } from '../actions/moviesActions';
 
 const initialState = {
-    data: [],
+    movies: { data: [], total: 0 },
+    filmId: {},
     loading: false,
     error: null
 };
@@ -23,7 +29,7 @@ export default function movieReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                data: action.payload.data
+                movies: action.payload.data
             };
 
         case FETCH_MOVIES_FAILURE:
@@ -31,8 +37,48 @@ export default function movieReducer(state = initialState, action) {
                 ...state,
                 loading: false,
                 error: action.payload.error,
-                data: []
+                movies: { data: [], total: 0 },
             };
+
+        case FETCH_FILMID_BEGIN:
+            return {
+                ...state,
+                loading: true,
+                error: null
+            };
+
+        case FETCH_FILMID_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                filmId: action.payload
+            };
+
+        case FETCH_FILMID_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error,
+                filmId: {},
+            };
+
+        case SORT_RELEASE:
+            let sortDataByRelease = state.movies.data.slice().sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+            return Object.assign({}, state, {
+                movies: {
+                    data: sortDataByRelease,
+                    total: state.movies.total
+                }
+            });
+
+        case SORT_RATING:
+            let sortDataByRating = state.movies.data.slice().sort((a, b) => b.vote_average - a.vote_average);
+            return Object.assign({}, state, {
+                movies: {
+                    data: sortDataByRating,
+                    total: state.movies.total
+                }
+            });
 
         default:
             return state;

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const Styledh3 = styled.h3`
     height: calc(100vh - 546px);
     margin: 150px auto 0;
+    width: 200px;
 `;
 
 const NotFound = () => {
