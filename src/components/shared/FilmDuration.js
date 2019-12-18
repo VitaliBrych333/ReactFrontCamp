@@ -13,12 +13,12 @@ const StyledDiv = styled.div`
   }
 `;
 
-const Duration = () => {
+const Duration = (props) => {
     return (
         <StyledDiv>
-            <p><span>1999</span> year</p>
-            <p><span>195</span> min</p>
-        </StyledDiv>    
+            <p><span>{props.propValue.release_date.slice(0, 4)}</span> year</p>
+            {props.propValue.runtime && <p><span>{props.propValue.runtime}</span> min</p>}
+        </StyledDiv>
     );
 };
 

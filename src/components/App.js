@@ -1,42 +1,53 @@
 import React, { Component, Fragment } from 'react';
-import SearchHeader from './SearchHeader';
-import CardFilm from './CardFilm';
-import NotFound from './NotFound';
-import FilmDetails from './FilmDetails'
 import ErrorBoundary from './shared/ErrorBoundary';
-import styled from 'styled-components'
-
-const StyledSection = styled.section`
-    padding: 25px;
-    background-color:  rgb(209, 189, 189);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-
-    div {
-        margin-bottom: 10px;
-    }
-`;
+import { connect } from 'react-redux';
+import IncorrectPath from './IncorrectPath';
+import StartPage from './StartPage';
+import DetailsPage from './DetailsPage';
+import {
+    BrowserRouter as Router, Switch, Route, Redirect
+} from 'react-router-dom';
 
 class App extends Component {
 
     render() {
+        const { error, loading, data } = this.props;
         return (
             <Fragment>
-                <ErrorBoundary>
-                    <SearchHeader/>
-                </ErrorBoundary>
-                <ErrorBoundary>
-                    <StyledSection>
-                        <CardFilm/>
-                        <CardFilm/>
-                        <CardFilm/>
-                        <CardFilm/>
-                    </StyledSection>
-                </ErrorBoundary>
+                <Router>
+                    <Switch>
+                        <Route exact path="/">
+                            <ErrorBoundary>
+                                <StartPage data={this.props.data}/>
+                            </ErrorBoundary>
+                        </Route>
+                        <Route path="/movies/:id">
+                            <ErrorBoundary>
+                                <DetailsPage/>
+                            </ErrorBoundary>
+                        </Route>
+                        <Route path="/search/Search20Query">
+                            <ErrorBoundary>
+                                <StartPage data={this.props.data}/>
+                            </ErrorBoundary>
+                        </Route>
+                        <Route path='/404'>
+                            <ErrorBoundary>
+                                <IncorrectPath/>
+                            </ErrorBoundary>
+                        </Route>
+                        <Redirect from='*' to='/404'/>
+                    </Switch>
+                </Router>
             </Fragment>
         );
     }
 }
 
-export default App;
+const mapStateToProps = state => ({
+    data: state.movieReducer.movies.data,
+    loading: state.movieReducer.loading,
+    error: state.movieReducer.error
+});
+
+export default connect(mapStateToProps)(App);
