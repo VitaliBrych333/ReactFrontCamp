@@ -2,6 +2,28 @@ import movieReducer from './movieReducer';
 import * as actions from '../actions/moviesActions';
 import expect from 'expect';
 
+const thunk = ({ dispatch, getState }) => next => action => {
+  if (typeof action === 'function') {
+    return action(dispatch, getState)
+  }
+
+  return next(action)
+}
+
+const create = () => {
+  const store = {
+    getState: jest.fn(() => ({})),
+    dispatch: jest.fn()
+  }
+  const next = jest.fn()
+
+  const invoke = action => thunk(store)(next)(action)
+
+  return { store, next, invoke }
+}
+
+
+
 describe('movieReducer', () => {
     it('should return the initial state', () => {
         expect(movieReducer(undefined, {})).toEqual({ movies: { data: [], total: 0 }, filmId: {}, loading: false, error: null});
@@ -221,21 +243,28 @@ describe('movieReducer', () => {
         expect(actions.sortRating('rating')).toEqual(expectedAction);
     });
 
-    it('should return function', () => {
-        const expected = expect.any(Function);
+    it('should return a promise', () => {
+        const dispatch = jest.fn();
 
-        expect(actions.fetchMovies('rating', 'title', 'test')).toEqual(expected)
+        expect(actions.fetchMovies('rating', 'title', 'test')(dispatch).then().then()).toEqual(Promise.resolve());
     });
 
-    it('should return function', () => {
-        const expected = expect.any(Function);
 
-        expect(actions.fetchMoviesByGenre('rating', 'test')).toEqual(expected)
+    it('should return a promise when value is object', () => {
+        const dispatch = jest.fn();
+
+        expect(actions.fetchMoviesByGenre('rating', ['test', 'test'])(dispatch)).toEqual(Promise.resolve());
     });
 
-    it('should return function', () => {
-        const expected = expect.any(Function);
+    it('should return a promise when value is string', () => {
+        const dispatch = jest.fn();
 
-        expect(actions.fetchMovieId('123')).toEqual(expected)
+        expect(actions.fetchMoviesByGenre('rating', 'test')(dispatch)).toEqual(Promise.resolve());
+    });
+
+    it('should return a promise', () => {
+        const dispatch = jest.fn();
+
+        expect(actions.fetchMovieId('123')(dispatch)).toEqual(Promise.resolve());
     });
 });
