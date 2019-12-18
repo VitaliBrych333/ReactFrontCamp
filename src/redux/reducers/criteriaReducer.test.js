@@ -7,6 +7,28 @@ describe('criteriaReducer', () => {
         expect(criteriaReducer(undefined, {})).toEqual({'search': 'title', 'sort': 'release_date'});
     });
 
+    it('should set up the value for search', () => {
+        const successAction = {
+            type: actions.SET_SEARCH,
+            payload: {
+                search: 'genre'
+            },
+        };
+
+        expect(criteriaReducer(undefined, successAction)).toEqual({'search': 'genre', 'sort': 'release_date'});
+    });
+
+    it('should set up the value for sort', () => {
+        const successAction = {
+            type: actions.SET_SORT,
+            payload: {
+                sort: 'rating'
+            },
+        };
+
+        expect(criteriaReducer(undefined, successAction)).toEqual({'search': 'title', 'sort': 'rating'});
+    });
+
     it('should handle SET_SEARCH', () => {
         const expectedAction = {
             type: actions.SET_SEARCH,

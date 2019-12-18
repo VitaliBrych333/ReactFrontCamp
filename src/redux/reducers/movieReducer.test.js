@@ -7,6 +7,138 @@ describe('movieReducer', () => {
         expect(movieReducer(undefined, {})).toEqual({ movies: { data: [], total: 0 }, filmId: {}, loading: false, error: null});
     });
 
+    it('should set up loading is true', () => {
+        const successAction = {
+            type: actions.FETCH_MOVIES_BEGIN,
+        };
+
+        const expectState = {
+            movies: { data: [], total: 0 },
+            filmId: {},
+            loading: true,
+            error: null
+        };
+
+        expect(movieReducer(undefined, successAction)).toEqual(expectState);
+    });
+
+    it('should set up data', () => {
+        const successAction = {
+            type: actions.FETCH_MOVIES_SUCCESS,
+            payload: {
+                data: { data: [1, 2], total: 2 }
+            },
+        };
+
+        const expectState = {
+            movies: { data: [1, 2], total: 2 },
+            filmId: {},
+            loading: false,
+            error: null
+        };
+
+        expect(movieReducer(undefined, successAction)).toEqual(expectState);
+    });
+
+    it('should return error', () => {
+        const successAction = {
+            type: actions.FETCH_MOVIES_FAILURE,
+            payload: {
+                error: 'error'
+            },
+        };
+
+        const expectState = {
+            movies: { data: [], total: 0 },
+            filmId: {},
+            loading: false,
+            error: 'error'
+        };
+
+        expect(movieReducer(undefined, successAction)).toEqual(expectState);
+    });
+
+    it('should set up loading is true', () => {
+        const successAction = {
+            type: actions.FETCH_FILMID_BEGIN,
+        };
+
+        const expectState = {
+            movies: { data: [], total: 0 },
+            filmId: {},
+            loading: true,
+            error: null
+        };
+
+        expect(movieReducer(undefined, successAction)).toEqual(expectState);
+    });
+
+    it('should set up data', () => {
+        const successAction = {
+            type: actions.FETCH_FILMID_SUCCESS,
+            payload: { id: 'test'}
+        };
+
+        const expectState = {
+            movies: { data: [], total: 0 },
+            filmId: { id: 'test'},
+            loading: false,
+            error: null
+        };
+
+        expect(movieReducer(undefined, successAction)).toEqual(expectState);
+    });
+
+    it('should return error', () => {
+        const successAction = {
+            type: actions.FETCH_FILMID_FAILURE,
+            payload: {
+                error: 'error'
+            }
+        };
+
+        const expectState = {
+            movies: { data: [], total: 0 },
+            filmId: {},
+            loading: false,
+            error: 'error'
+        };
+
+        expect(movieReducer(undefined, successAction)).toEqual(expectState);
+    });
+
+    it('should sort by date release desc ', () => {
+        const initialState = {
+            movies: { data: [ {release_date: 2017}, {release_date: 2019} ], total: 2 },
+        };
+
+        const successAction = {
+            type: actions.SORT_RELEASE,
+        };
+
+        const expectState = {
+            movies: { data: [ {release_date: 2019}, {release_date: 2017} ], total: 2 },
+        };
+
+        expect(movieReducer(initialState, successAction)).toEqual(expectState);
+    });
+
+    it('should sort by rating desc ', () => {
+        const initialState = {
+            movies: { data: [ {vote_average: 7.6}, {vote_average: 9.0} ], total: 2 },
+        };
+
+        const successAction = {
+            type: actions.SORT_RATING,
+        };
+
+        const expectState = {
+            movies: { data: [ {vote_average: 9.0}, {vote_average: 7.6} ], total: 2 },
+        };
+
+        expect(movieReducer(initialState, successAction)).toEqual(expectState);
+    });
+
     it('should handle FETCH_MOVIES_BEGIN', () => {
         const expectedAction = {
             type: actions.FETCH_MOVIES_BEGIN,
@@ -89,5 +221,21 @@ describe('movieReducer', () => {
         expect(actions.sortRating('rating')).toEqual(expectedAction);
     });
 
+    it('should return function', () => {
+        const expected = expect.any(Function);
 
+        expect(actions.fetchMovies('rating', 'title', 'test')).toEqual(expected)
+    });
+
+    it('should return function', () => {
+        const expected = expect.any(Function);
+
+        expect(actions.fetchMoviesByGenre('rating', 'test')).toEqual(expected)
+    });
+
+    it('should return function', () => {
+        const expected = expect.any(Function);
+
+        expect(actions.fetchMovieId('123')).toEqual(expected)
+    });
 });
