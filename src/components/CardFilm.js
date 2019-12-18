@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { Badge, Card } from 'react-bootstrap';
-import styled from 'styled-components'
 import { connect } from 'react-redux';
-import { fetchMoviesByGenre } from '../redux/actions/moviesActions';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams
-} from 'react-router-dom';
+import { fetchMoviesByGenre, fetchMovieId } from '../redux/actions/moviesActions';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const StyledCartTitle = styled(Card.Title)`
     display: flex;
@@ -67,16 +61,18 @@ const StyledCard = styled(Card)`
 class Item extends Component {
 
     handleClick(e) {
-      this.props.dispatch(
-          fetchMoviesByGenre(this.props.sort, e.target.value));
+        this.props.dispatch(
+            fetchMoviesByGenre(this.props.sort, e.target.value));
     }
 
     handleRequests(e, array) {
-      if (array.length) {
-          this.props.dispatch(
-            fetchMoviesByGenre(this.props.sort, array));
-      }
+        this.props.dispatch(
+            fetchMovieId(this.props.info.id));
 
+        if (array.length) {
+            this.props.dispatch(
+              fetchMoviesByGenre(this.props.sort, array));
+        }
     }
 
     render() {
@@ -99,9 +95,6 @@ class Item extends Component {
 
 const mapStateToProps = state => ({
     data: state.movieReducer.movies.data,
-    loading: state.movieReducer.loading,
-    error: state.movieReducer.error,
-    search: state.criteriaReducer.search,
     sort: state.criteriaReducer.sort
 });
 

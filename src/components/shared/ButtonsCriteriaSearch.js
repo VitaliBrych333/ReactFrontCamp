@@ -3,6 +3,7 @@ import { Button, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { setSearch, setSort } from '../../redux/actions/criteriaActions';
 import { sortRelease, sortRating } from '../../redux/actions/moviesActions';
+
 class CriteriaSearch extends Component {
     constructor(props) {
         super(props);
@@ -49,8 +50,6 @@ class CriteriaSearch extends Component {
 
 function mapStateToProps(state) {
     return {
-        // search: state.criteriaReducer.search,
-        // sort: state.criteriaReducer.sort,
         data: state.movieReducer.movies,
     };
 }

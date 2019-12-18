@@ -24,7 +24,6 @@ class StartPage extends Component {
 
     render() {
         const { error, loading, data } = this.props;
-
         let main;
 
         if (this.props.data.length) {
@@ -35,23 +34,20 @@ class StartPage extends Component {
             main = <NotFound/>;
         }
 
-      return (
-          <Fragment>
-              <SearchHeader count={this.props.total}/>
-              {main}
-          </Fragment>
-      );
+        return (
+            <Fragment>
+                <SearchHeader count={this.props.total}/>
+                {main}
+            </Fragment>
+        );
     }
-
 };
 
 const mapStateToProps = state => ({
-  data: state.movieReducer.movies.data,
-  total: state.movieReducer.movies.total,
-  loading: state.movieReducer.loading,
-  error: state.movieReducer.error,
-  search: state.criteriaReducer.search,
-  sort: state.criteriaReducer.sort
+    data: state.movieReducer.movies.data,
+    total: state.movieReducer.movies.total,
+    loading: state.movieReducer.loading,
+    error: state.movieReducer.error,
 });
 
 export default connect(mapStateToProps)(StartPage);

@@ -37,7 +37,6 @@ export const fetchFilmIdFailure = error => ({
     payload: { error }
 });
 
-
 export const sortRelease = data => ({
     type: SORT_RELEASE,
     payload: {
@@ -68,11 +67,11 @@ export function fetchMovies(sortBy, searchBy, value) {
 }
 
 export function fetchMoviesByGenre(sortBy, value) {
-    console.log('fetchMoviesByGenre', value)
+
     if (typeof value === 'object') {
         value = value.join('%2C%20');
-        console.log(' value',  value)
     }
+
     const request = `https://reactjs-cdp.herokuapp.com/movies?sortBy=${sortBy}&sortOrder=desc&searchBy=genres&filter=${value}`
 
     return dispatch => {

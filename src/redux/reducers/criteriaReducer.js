@@ -23,4 +23,3 @@ function criteriaReducer(state = initialState, action) {
 }
 
 export default criteriaReducer;
-

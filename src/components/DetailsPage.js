@@ -1,14 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import SearchHeader from './SearchHeader';
 import NotFound from './NotFound';
-import styled from 'styled-components'
-import { connect } from 'react-redux';
+import styled from 'styled-components';
 import CardFilm from './CardFilm';
 import { useParams } from "react-router";
 import FilmDetails from './FilmDetails';
-import { fetchMovieId, fetchMoviesByGenre } from '../redux/actions/moviesActions';
-
-
+import { connect } from 'react-redux';
 
 const StyledSection = styled.section`
     padding: 25px;
@@ -23,32 +19,27 @@ const StyledSection = styled.section`
 `;
 
 const DetailsPage = (props) => {
-      let main;
-      let { id } = useParams();
+    let main;
+    let { id } = useParams();
 
-      if (props.filmId.data) {
-          main =  <StyledSection>
-                    {props.data.map(item => <CardFilm key={item.id} info={item}/> )}
-                  </StyledSection>
-      } else {
-          main = <NotFound/>;
-      }
+    if (props.filmId.data) {
+        main = <StyledSection>
+                  {props.data.map(item => <CardFilm key={item.id} info={item}/> )}
+               </StyledSection>
+    } else {
+        main = <NotFound/>;
+    }
 
-      return (
-          <Fragment>
-              <FilmDetails propsId={{ id }}/>
-              {main}
-          </Fragment>
-      );
+    return (
+        <Fragment>
+            <FilmDetails propsId={{ id }}/>
+            {main}
+        </Fragment>
+    );
 };
 
 const mapStateToProps = state => ({
     data: state.movieReducer.movies.data,
-    total: state.movieReducer.movies.total,
-    loading: state.movieReducer.loading,
-    error: state.movieReducer.error,
-    search: state.criteriaReducer.search,
-    sort: state.criteriaReducer.sort.CardFilm,
     filmId: state.movieReducer.filmId
 });
 

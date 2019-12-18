@@ -1,4 +1,3 @@
-// export const GET_MOVIES = 'GET_MOVIES';
 export const SET_SEARCH = 'SET_SEARCH';
 export const SET_SORT = 'SET_SORT';
 

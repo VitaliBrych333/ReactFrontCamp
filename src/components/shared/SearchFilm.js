@@ -1,12 +1,18 @@
 import React, { Component, Fragment } from 'react'
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
-import ButtonsCriteriaSearch from './ButtonsCriteriaSearch';
-import styled from 'styled-components'
 import { connect } from 'react-redux';
 import { fetchMovies } from '../../redux/actions/moviesActions';
+import ButtonsCriteriaSearch from './ButtonsCriteriaSearch';
+import styled from 'styled-components'
 
 const StyledGroup = styled(InputGroup)`
     padding: 0 50px;
+    margin: 0 auto;
+    max-width: 700px;
+
+    .input-group-append {
+        background-color: bisque;
+    }
 `;
 
 class SearchFilm extends Component {
@@ -55,9 +61,6 @@ class SearchFilm extends Component {
 }
 
 const mapStateToProps = state => ({
-    data: state.movieReducer.movies.data,
-    loading: state.movieReducer.loading,
-    error: state.movieReducer.error,
     search: state.criteriaReducer.search,
     sort: state.criteriaReducer.sort
 });
