@@ -5,7 +5,7 @@ import IncorrectPath from './IncorrectPath';
 import StartPage from './StartPage';
 import DetailsPage from './DetailsPage';
 import {
-    BrowserRouter as Router, Switch, Route, Redirect
+    HashRouter as Router, Switch, Route, Redirect
 } from 'react-router-dom';
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
         const { error, loading, data } = this.props;
         return (
             <Fragment>
-                <Router>
+                <Router basename='/'>
                     <Switch>
                         <Route exact path="/">
                             <ErrorBoundary>
