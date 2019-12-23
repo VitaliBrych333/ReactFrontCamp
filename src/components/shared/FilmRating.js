@@ -14,7 +14,7 @@ const StyledDiv = styled.div`
         padding: 7px;
         font-size: 20px;
     }
-    
+
     h3 {
         margin-right: 15px;
         margin-top: 5px;
@@ -26,12 +26,12 @@ const StyledDiv = styled.div`
     }
 `;
 
-const Rating = () => {
+const Rating = (props) => {
     return (
         <StyledDiv>
-            <h3>Film name <span>Oscar movie</span></h3>
-            <div>4.4</div>
-        </StyledDiv>    
+            <h3>{props.propValue.title} <span>{props.propValue.tagline}</span></h3>
+            <div>{props.propValue.vote_average}</div>
+        </StyledDiv>
     );
 };
 

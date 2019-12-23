@@ -1,13 +1,14 @@
 import React from 'react';
 import { MDBIcon } from "mdbreact";
-import styled from 'styled-components'
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const StyledSpan = styled.span`
     display: flex;
     justify-content: flex-end;
     padding-right: 25px;
 
-    i { 
+    i {
         margin-top: 25px;
         transform: rotateZ(90deg);
         color: red;
@@ -22,7 +23,7 @@ const StyledSpan = styled.span`
 const SignSearch = () => {
     return (
         <StyledSpan>
-            <MDBIcon icon="search" size="1x" className="pr-3" />
+            <Link to={{pathname: '/search/Search20Query'}}><MDBIcon icon="search" size="1x" className="pr-3" /></Link>
         </StyledSpan>
     );
 };
