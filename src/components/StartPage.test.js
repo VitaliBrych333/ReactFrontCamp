@@ -11,6 +11,7 @@ import configureStore from 'redux-mock-store';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('<StartPage/>', () => {
+
   beforeEach(() => {
     container = document.createElement('div');
     document.body.appendChild(container);

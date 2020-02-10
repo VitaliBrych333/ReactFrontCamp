@@ -9,6 +9,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('<NotFound/>', () => {
   let container = null;
+
   beforeEach(() => {
     container = document.createElement('div');
     document.body.appendChild(container);

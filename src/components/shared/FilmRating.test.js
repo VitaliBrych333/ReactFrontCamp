@@ -3,7 +3,6 @@ import Rating from './FilmRating'
 import renderer from 'react-test-renderer';
 
 describe('<Rating/>', () => {
-
   it('should equals to snapshot of Rating', () => {
     const mockPropValue = {
       title: 'test',

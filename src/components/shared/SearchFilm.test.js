@@ -1,13 +1,11 @@
 import React from 'react';
-import ReactDOM, { render, unmountComponentAtNode } from 'react-dom';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount, shallow } from 'enzyme';
 import SearchFilm from './SearchFilm';
-import { act } from 'react-dom/test-utils';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -49,7 +47,6 @@ describe('<CriteriaSearch/>', () => {
   });
 
   it('should not call onChange', () => {
-
     const onChange = jest.fn();
     const wrap = mount(<Provider store={store}><SearchFilm /></Provider>);
     wrap.find(FormControl).simulate('change');

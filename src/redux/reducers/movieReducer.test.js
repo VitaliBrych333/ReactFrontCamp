@@ -22,8 +22,6 @@ const create = () => {
   return { store, next, invoke }
 }
 
-
-
 describe('movieReducer', () => {
     it('should return the initial state', () => {
         expect(movieReducer(undefined, {})).toEqual({ movies: { data: [], total: 0 }, filmId: {}, loading: false, error: null});

@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactDOM, { render, unmountComponentAtNode } from 'react-dom';
+import ReactDOM, { unmountComponentAtNode } from 'react-dom';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import SignSearch from './SignSearch'
-import { act } from 'react-dom/test-utils';
 import { BrowserRouter as Router } from 'react-router-dom';
 import renderer from 'react-test-renderer';
+
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('<SignSearch/>', () => {
@@ -31,5 +31,5 @@ describe('<SignSearch/>', () => {
 
     const renderedValue = renderer.create(<Router><SignSearch /></Router>).toJSON()
     expect(renderedValue).toMatchSnapshot();
-});
+  });
 })
