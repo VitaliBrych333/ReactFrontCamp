@@ -4,10 +4,10 @@ import expect from 'expect';
 
 const thunk = ({ dispatch, getState }) => next => action => {
   if (typeof action === 'function') {
-    return action(dispatch, getState)
+    return action(dispatch, getState);
   }
 
-  return next(action)
+  return next(action);
 }
 
 const create = () => {
@@ -17,9 +17,9 @@ const create = () => {
   }
   const next = jest.fn()
 
-  const invoke = action => thunk(store)(next)(action)
+  const invoke = action => thunk(store)(next)(action);
 
-  return { store, next, invoke }
+  return { store, next, invoke };
 }
 
 describe('movieReducer', () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Rating from './FilmRating'
+import Rating from './FilmRating';
 import renderer from 'react-test-renderer';
 
 describe('<Rating/>', () => {
@@ -8,8 +8,8 @@ describe('<Rating/>', () => {
       title: 'test',
       tagline: 'test',
       vote_average: 'test'
-    }
-    const renderedValue = renderer.create(<Rating propValue={mockPropValue}/>).toJSON()
+    };
+    const renderedValue = renderer.create(<Rating propValue={mockPropValue}/>).toJSON();
     expect(renderedValue).toMatchSnapshot();
   });
 })

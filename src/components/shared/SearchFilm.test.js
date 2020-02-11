@@ -9,17 +9,7 @@ import { FormControl } from 'react-bootstrap';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('<CriteriaSearch/>', () => {
-  beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-  });
-
-  afterEach(() => {
-    document.body.removeChild(container);
-    container = null;
-  });
-
+describe('<SearchFilm/>', () => {
   const initialState = {
     criteriaReducer: {
       search: 'search',
@@ -28,21 +18,28 @@ describe('<CriteriaSearch/>', () => {
     movieReducer: {
       movies: [{id: 1}]
     }
-  }
-  const mockStore = configureStore()
-  let store,wrapper
+  };
+  const mockStore = configureStore();
+  let store, wrapper;
 
-  beforeEach(()=>{
-      store = mockStore(initialState)
-      wrapper = shallow(<Provider store={store}><SearchFilm /></Provider>)
-  })
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    store = mockStore(initialState);
+    wrapper = shallow(<Provider store={store}><SearchFilm /></Provider>);
+  });
+
+  afterEach(() => {
+    document.body.removeChild(container);
+    container = null;
+  });
 
   it('render component', () => {
-     expect(wrapper.find(SearchFilm).length).toEqual(1)
+     expect(wrapper.find(SearchFilm).length).toEqual(1);
   });
 
   it('should equals to snapshot of CriteriaSearch', () => {
-    const renderedValue = renderer.create(<Provider store={store}><SearchFilm /></Provider>).toJSON()
+    const renderedValue = renderer.create(<Provider store={store}><SearchFilm /></Provider>).toJSON();
     expect(renderedValue).toMatchSnapshot();
   });
 

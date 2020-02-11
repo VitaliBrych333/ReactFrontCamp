@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('<ErrorBoundary/>', () => {
   it('should returns undefined', () => {
-    expect(shallow(<ErrorBoundary />).equals(undefined)).toBe(true);;
+    expect(shallow(<ErrorBoundary />).equals(undefined)).toBe(true);
   });
 
   it('should display an ErrorMessage if wrapped component throws', () => {
@@ -19,7 +19,6 @@ describe('<ErrorBoundary/>', () => {
     );
 
     const error = new Error('test');
-
     wrapper.find(NotFound).simulateError(error);
   })
 })

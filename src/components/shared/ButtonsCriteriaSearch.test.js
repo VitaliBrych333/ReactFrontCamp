@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactDOM, { render, unmountComponentAtNode } from 'react-dom';
+import ReactDOM from 'react-dom';
 import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount, shallow } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import CriteriaSearch from './ButtonsCriteriaSearch'
 import { act } from 'react-dom/test-utils';
 import renderer from 'react-test-renderer';
@@ -11,9 +11,19 @@ import configureStore from 'redux-mock-store';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('<CriteriaSearch/>', () => {
+  const initialState = {
+    movieReducer: {
+      movies: [{id: 1}]
+    }
+  };
+  const mockStore = configureStore();
+  let store, wrapper;
+
   beforeEach(() => {
     container = document.createElement('div');
     document.body.appendChild(container);
+    store = mockStore(initialState);
+    wrapper = shallow(<Provider store={store}><CriteriaSearch /></Provider>);
   });
 
   afterEach(() => {
@@ -21,21 +31,8 @@ describe('<CriteriaSearch/>', () => {
     container = null;
   });
 
-  const initialState = {
-    movieReducer: {
-      movies: [{id: 1}]
-    }
-  }
-  const mockStore = configureStore()
-  let store,wrapper
-
-  beforeEach(()=>{
-      store = mockStore(initialState)
-      wrapper = shallow(<Provider store={store}><CriteriaSearch /></Provider>)
-  })
-
   it('render component', () => {
-     expect(wrapper.find(CriteriaSearch).length).toEqual(1)
+     expect(wrapper.find(CriteriaSearch).length).toEqual(1);
   });
 
   it('should equals to snapshot of CriteriaSearch', () => {
@@ -43,8 +40,8 @@ describe('<CriteriaSearch/>', () => {
       kind: 'Sort',
       left: 'Release date',
       right: 'Rating'
-    }
-    const renderedValue = renderer.create(<Provider store={store}><CriteriaSearch buttonNames={state}/></Provider>).toJSON()
+    };
+    const renderedValue = renderer.create(<Provider store={store}><CriteriaSearch buttonNames={state}/></Provider>).toJSON();
     expect(renderedValue).toMatchSnapshot();
   });
 
@@ -53,7 +50,7 @@ describe('<CriteriaSearch/>', () => {
       kind: 'Sort',
       left: 'Release date',
       right: 'Rating'
-    }
+    };
     act(() => {
       ReactDOM.render(<Provider store={store}><CriteriaSearch buttonNames={state}/></Provider>, container);
     });
@@ -63,6 +60,7 @@ describe('<CriteriaSearch/>', () => {
       button[0].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
     expect(document.title).toBe('');
+
     act(() => {
       button[1].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
@@ -74,7 +72,7 @@ describe('<CriteriaSearch/>', () => {
       kind: 'Sort',
       left: 'Title',
       right: 'Genre'
-    }
+    };
     act(() => {
       ReactDOM.render(<Provider store={store}><CriteriaSearch buttonNames={state}/></Provider>, container);
     });
@@ -84,6 +82,7 @@ describe('<CriteriaSearch/>', () => {
       button[0].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
     expect(document.title).toBe('');
+
     act(() => {
       button[1].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });

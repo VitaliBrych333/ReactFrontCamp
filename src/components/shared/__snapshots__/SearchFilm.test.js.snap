@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<CriteriaSearch/> should equals to snapshot of CriteriaSearch 1`] = `
+exports[`<SearchFilm/> should equals to snapshot of CriteriaSearch 1`] = `
 Array [
   <h1>
     Find your movie

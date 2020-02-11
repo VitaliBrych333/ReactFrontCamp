@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM, { render, unmountComponentAtNode } from 'react-dom';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
-import NotFound from './NotFound'
+import NotFound from './NotFound';
 import { act } from 'react-dom/test-utils';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -26,7 +26,6 @@ describe('<NotFound/>', () => {
     });
     expect(container.textContent).toBe('No films found');
   });
-
 
   it('should render the component', () => {
     const wrapper = shallow(<NotFound/>).dive();
