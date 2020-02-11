@@ -44,6 +44,7 @@ describe('<CardFilm/>', () => {
     container = document.createElement('div');
     document.body.appendChild(container);
     store = mockStore(initialState);
+    store.dispatch = jest.fn();
     wrapper = shallow(<Provider store={store}><Router><CardFilm {...props}/></Router></Provider>)
   });
 
@@ -61,16 +62,45 @@ describe('<CardFilm/>', () => {
     expect(renderedValue).toMatchSnapshot();
   });
 
-  // it('should click on buttons when sort by name/genre', () => {
-  //   act(() => {
-  //     ReactDOM.render(<Provider store={store}><Router><CardFilm {...props}/></Router></Provider>, container);
-  //   });
+  it('should call dispatch once', () => {
+    const dispath = store.dispatch;
 
-  //   const link = container.querySelector('a');
-  //   act(() => {
-  //     link.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-  //   });
-  //   expect(document.title).toBe('');
+    act(() => {
+      ReactDOM.render(<Provider store={store}><Router><CardFilm {...props}/></Router></Provider>, container);
+    });
 
-  // });
+    const link = container.querySelector('a');
+    act(() => {
+      link.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+    expect(dispath).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call dispatch thrice', () => {
+    const dispath = store.dispatch;
+    const info = {
+      poster_path: 'test',
+      release_date: 'test',
+      genres: [1],
+      title: 'test',
+      id: 1
+     };
+
+    const props = {
+      info,
+    };
+
+    act(() => {
+      ReactDOM.render(<Provider store={store}><Router><CardFilm {...props}/></Router></Provider>, container);
+    });
+
+    const link = container.querySelector('a');
+    const button = container.querySelector('button');
+
+    act(() => {
+      link.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+    expect(dispath).toHaveBeenCalledTimes(3);
+  });
 })
