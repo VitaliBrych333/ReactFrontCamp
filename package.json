@@ -47,7 +47,7 @@
     "reportportal-client": "^5.5.0",
     "start-server-and-test": "^1.10.8",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
+    "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
